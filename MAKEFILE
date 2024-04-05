@@ -1,0 +1,5 @@
+snow_log:
+	snowsql -c se_eval
+
+put_file:
+	put file:///Users/christopher.fraleigh/source/snowflake_se/data/LeadingCausesofDeath_noOA.json @stg_sales_eng_takehome;
