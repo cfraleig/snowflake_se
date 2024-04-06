@@ -120,3 +120,20 @@ ranked as (
     from 
         sales_by_date
     group by 2;
+
+-- Create a brand new table and store it within your own database that aggregates store_sales by item at the monthly level
+
+create or replace table se_eval.sql_problems.monthly_item_sales as 
+    select 
+        to_char(date_from_parts(date_dim.d_year,date_dim.d_moy,date_dim.d_dom),'YYYY-MM') as sale_month,
+        item.i_product_name,
+        sum(store_sales.SS_QUANTITY) as sales_quantity,
+    from 
+        store_sales
+    join
+        store on store.s_store_sk = store_sales.ss_store_sk
+    join 
+        item on item.i_item_sk = ss_item_sk
+    join 
+        date_dim on date_dim.D_DATE_SK = store_sales.SS_SOLD_DATE_SK
+    group by 1,2
