@@ -4,7 +4,7 @@ services:
   se_eval:
     build: .
     env_file:
-      - environment.env
+      - local_env.env
     volumes:
       - .:/app
       - ~/.snowflake:/root/.snowflake
