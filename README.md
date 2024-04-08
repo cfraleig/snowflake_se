@@ -1,7 +1,5 @@
 # snowflake_se
 
-### How to Use This Repo
-
 ## For the Python Exercise
 - Add your snowflake creds to the local_env.env file
 - Run `make build` to build the local image
