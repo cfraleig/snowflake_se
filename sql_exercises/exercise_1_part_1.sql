@@ -28,6 +28,22 @@ create or replace table se_eval.sql_problems.leading_causes_of_death_relational 
         se_eval.sql_problems.leading_causes_of_death;
 
 
+-- set up user and grant select access on tables 
+create role se_eval_ro;
+grant usage on database se_eval to role se_eval_ro;
+grant usage on warehouse compute_wh to role se_eval_ro;
+grant usage on schema se_eval.sql_problemsq to role se_eval_ro;
+grant select on all tables in schema se_eval.sql_problems to role se_eval_ro;
+
+create or replace user se_demo_user
+password = 'HelloWorld'
+default_role = 'se_eval_ro'
+MUST_CHANGE_PASSWORD = FALSE;
+
+grant role se_eval_ro to user se_demo_user;
+
+
+
 --###################
 --#### questions ####
 --###################
