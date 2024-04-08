@@ -9,5 +9,6 @@ WORKDIR /app
 RUN pip install "snowflake-snowpark-python[pandas]"
 
 COPY python_exercises/se_python.py se_python.py
+COPY /data /data
 
 RUN chmod +x /app/se_python.py

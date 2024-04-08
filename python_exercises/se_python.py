@@ -1,27 +1,33 @@
-import polars as pl
+import pandas
+import os
 from snowflake.snowpark import Session
 
-# Step 1: Connect to Snowflake
-connection_parameters = {
-    "account": "<your_account_name>",
-    "user": "<your_username>",
-    "password": "<your_password>",
-    "role": "<your_role>",
-    "warehouse": "<your_warehouse>",
-    "database": "<your_database>",
-    "schema": "<your_schema>"
-}
-session = Session.builder.configs(connection_parameters).create()
 
-# Step 2: Prepare your Polars DataFrame
-# Assuming you have a Polars DataFrame named `df`
-# For example:
-# df = pl.DataFrame({
-#     'column1': [1, 2, 3],
-#     'column2': ['a', 'b', 'c'],
-#     'column3': [True, False, True]
-# })
 
-# Step 3: Load the DataFrame into the Snowflake Table
-table_name = "se_eval.python_problems.sf_weather_data"
-session.write_pandas(df.to_pandas(), table_name)
+
+def get_snowpark_session():
+    connection_parameters = {
+    "account": os.getenv("ACCOUNTNAME"),
+    "user": os.getenv("USERNAME"),
+    "password": os.getenv("PASSWORD"),
+    "warehouse": os.getenv("WH__SE_EVAL__L") , # optional
+    "database": os.getenv("DBNAME"),  # optional
+    "schema": "python_problems",  # optional
+    } 
+    
+    session = Session.builder.configs(connection_parameters).create()
+    
+    return session
+
+def get_dataframe(filepath="data/global-summary-of-the-month-2022-04-19T17-15-42.csv"):  
+    frame = pandas.read_csv(filepath)
+    return frame
+
+def write_table(dataframe,session):
+    table_name = 'weather_data'
+    session.write_pandas(dataframe, table_name,auto_create_table=True,overwrite=True)
+
+if __name__ == "__main__":
+    dataframe = get_dataframe()
+    session = get_snowpark_session()
+    write_table(dataframe,session)

@@ -3,6 +3,8 @@ version: '3'
 services:
   se_eval:
     build: .
+    env_file:
+      - environment.env
     volumes:
       - .:/app
       - ~/.snowflake:/root/.snowflake
