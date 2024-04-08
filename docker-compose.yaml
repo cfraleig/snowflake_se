@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  se_eval:
+    build: .
+    volumes:
+      - .:/app
+      - ~/.snowflake:/root/.snowflake
+    stdin_open: true 

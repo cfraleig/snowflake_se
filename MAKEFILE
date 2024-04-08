@@ -3,3 +3,15 @@ snow_log:
 
 put_file:
 	put file:///Users/christopher.fraleigh/source/snowflake_se/data/LeadingCausesofDeath_noOA.json @stg_sales_eng_takehome;
+
+up:
+	docker-compose up -d
+
+down:
+	docker-compose down
+
+shell:
+	docker compose exec se_eval  /bin/bash
+
+build:
+	docker compose build
