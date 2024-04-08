@@ -25,7 +25,10 @@ def get_dataframe(filepath="data/global-summary-of-the-month-2022-04-19T17-15-42
 
 def write_table(dataframe,session):
     table_name = 'weather_data'
-    session.write_pandas(dataframe, table_name,auto_create_table=True,overwrite=True)
+    try:
+        session.write_pandas(dataframe, table_name,auto_create_table=True,overwrite=True)
+    except Exception as e:
+        raise Exception(f"failed to load table with error {e}")
 
 if __name__ == "__main__":
     dataframe = get_dataframe()
